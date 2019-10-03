@@ -6,6 +6,7 @@ const {
    largestContinuousSum,
    findStart,
    maxProfit,
+   findRepeat,
 } = require('./test.js');
 let sinon = require('sinon');
 const expect = chai.expect;
@@ -131,5 +132,22 @@ describe('BONUS: Best time to buy and sell stock function', () => {
    });
    xit('should work if the prices do down all day, you MUST buy and sell, here you should minimize losses instead of maximizing gains', () => {
       expect(maxProfit([9, 7, 4, 1])).to.equal(-2);
+   });
+});
+describe('BONUS: Needle in haystack, find the first repeating number given an array of numbers', () => {
+   const sample1 = [1, 1];
+   const sample2 = [4, 1, 4, 8, 3, 2, 7, 6, 5];
+   const sample3 = [4, 1, 2, 3, 4];
+   xit('takes an array of integers and returns an integer', () => {
+      expect(typeof findRepeat(sample1)).to.equal('number');
+   });
+   xit('should work on a long array', () => {
+      expect(findRepeat(sample2)).to.equal(4);
+   });
+   xit('should work on a medium sized array', () => {
+      expect(findRepeat(sample3)).to.equal(4);
+   });
+   xit('should work on a short array', () => {
+      expect(findRepeat(sample1)).to.equal(1);
    });
 });

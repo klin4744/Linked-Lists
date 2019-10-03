@@ -11,7 +11,7 @@
 Write a function called threeSum that takes an array of unsorted integers and a target number and returns all combinations of numbers from that array that add up to the target number.
 
 ```javascript
-threeSum(threeSum([0, 1, 2, 3, 3], 6)); // [ [0, 3, 3],[1, 2, 3],]
+threeSum([0, 1, 2, 3, 3], 6); // [ [0, 3, 3],[1, 2, 3],]
 ```
 
 The time complexity of the solution should be O(n^2) maximum
@@ -62,4 +62,13 @@ Say I was buying stocks and wanted to maximize my profits for the day. Luckilly,
 maxProfit([5, 1, 9, 2, 3]); // Returns 8, if we imagine the indexes as hours of the day, I can buy the stock at hour 1 (index 1) at a price of 1, then sell the stock at hour 2 (index 2) at a price of 9, making a profit of 8
 maxProfit([1, 2, 3, 4, 5]); // returns -1, unfortunately in this case, I have to buy the stock at some point of the day even if it ends in a net lost in money. Here to minimize my losses, I'll but the stock at hour 0 then sell it at hour 1 only losing 1.
 maxProfit([1, 2, 3, 4, 9, 2]); // returns 8, I buy at hour/index 0 and sell at hour/index 4 resulting in a (9-1) profit. YOU MUST BUY BEFORE YOU SELL!!
+```
+
+## Find Repeat
+
+Given an array of unsorted integers, can you find the repeated number ? You can assume that there will only be one repeated number. Furthermore, can you do this in less than O(n^2) time?
+
+```javascript
+findRepeat([1, 1]); // Returns 1
+findRepeat([1, 2, 3, 4, 1]); // Returns 1
 ```
