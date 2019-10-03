@@ -2,6 +2,7 @@ let threeSum = n => {};
 let isCircular = () => {};
 let largestContinuousSum = () => {};
 let findStart = () => {};
+let maxProfit = () => {};
 
 //  KEVIN'S SOLUTIONS BELOW, DO NOT READ BEFORE ATTEMPTING PLEASE!
 //
@@ -83,9 +84,26 @@ let findStart = () => {};
 //    }
 //    return currentMiddleIdx;
 // }
+// function maxProfit(stockPrices) {
+
+//    // Calculate the max profit
+//    if(stockPrices.length <= 1) throw new Error('Stock prices is empty or has only one price');
+//    let maxProfit = -Infinity;
+//    let minPrice = stockPrices[0];
+//    for(let i = 1; i<stockPrices.length; i++){
+//      let currentStockPrice = stockPrices[i];
+//      let currentDifference = currentStockPrice - minPrice;
+//      maxProfit = Math.max(currentDifference, maxProfit);
+//      minPrice = Math.min(minPrice,currentStockPrice);
+//    }
+
+//    return maxProfit;
+//  }
+
 module.exports = {
    threeSum,
    isCircular,
    largestContinuousSum,
    findStart,
+   maxProfit,
 };

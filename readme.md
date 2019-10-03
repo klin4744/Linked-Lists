@@ -53,3 +53,13 @@ findStart([
    'othellolagkage',
 ]); // returns 5 because the smallest word is "asymptote" at index 5,
 ```
+
+## Max profit
+
+Say I was buying stocks and wanted to maximize my profits for the day. Luckilly, I can see into the future and see the price of the stock for every hour of the day. Write a function that takes an array of numbers where the numbers represent the stock prices and their index within the array represents the time of day. For example, the stock price at the begining of the day would correspond to the first item in the array and so on
+
+```javascript
+maxProfit([5, 1, 9, 2, 3]); // Returns 8, if we imagine the indexes as hours of the day, I can buy the stock at hour 1 (index 1) at a price of 1, then sell the stock at hour 2 (index 2) at a price of 9, making a profit of 8
+maxProfit([1, 2, 3, 4, 5]); // returns -1, unfortunately in this case, I have to buy the stock at some point of the day even if it ends in a net lost in money. Here to minimize my losses, I'll but the stock at hour 0 then sell it at hour 1 only losing 1.
+maxProfit([1, 2, 3, 4, 9, 2]); // returns 8, I buy at hour/index 0 and sell at hour/index 4 resulting in a (9-1) profit. YOU MUST BUY BEFORE YOU SELL!!
+```

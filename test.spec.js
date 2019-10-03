@@ -5,6 +5,7 @@ const {
    isCircular,
    largestContinuousSum,
    findStart,
+   maxProfit,
 } = require('./test.js');
 let sinon = require('sinon');
 const expect = chai.expect;
@@ -119,4 +120,16 @@ describe('semi sorted dictionary function', () => {
       expect(findStart(words2)).to.equal(0);
    });
    xit("If you can do this in O(log(n)) time you're solid!");
+});
+describe('BONUS: Best time to buy and sell stock function', () => {
+   const stockPrices = [10, 7, 5, 8, 11, 9];
+   xit('takes an array of integers and returns an integer', () => {
+      expect(typeof maxProfit(stockPrices)).to.equal('number');
+   });
+   xit('should return the maximum profit you can make', () => {
+      expect(maxProfit(stockPrices)).to.equal(5);
+   });
+   xit('should work if the prices do down all day, you MUST buy and sell, here you should minimize losses instead of maximizing gains', () => {
+      expect(maxProfit([9, 7, 4, 1])).to.equal(-2);
+   });
 });
