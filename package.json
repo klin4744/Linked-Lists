@@ -1,0 +1,20 @@
+{
+   "name": "test",
+   "version": "1.0.0",
+   "description": "",
+   "main": "index.js",
+   "scripts": {
+      "test": "mocha --watch test.spec"
+   },
+   "author": "Kevin Lin",
+   "license": "ISC",
+   "devDependencies": {
+      "chai": "^4.2.0",
+      "mocha": "^5.2.0",
+      "mocha-sinon": "^2.1.0"
+   },
+   "dependencies": {
+      "sinon": "^7.3.2",
+      "sinon-chai": "^3.3.0"
+   }
+}
