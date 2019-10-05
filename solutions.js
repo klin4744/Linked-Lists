@@ -21,14 +21,12 @@ const threeSum = (arr, target) => {
    return results;
 };
 const isCircular = node => {
-   // If a node doesn't exist, or if the node's next property doesn't exist just return null
    if (node === null || node.next === null) return false;
-   // Create two pointers, one at the head node we're given and another one node ahead of it
+
    let currentNode = node;
    let endNode = node.next;
-   // We want to loop until we either 1. reach the end of the linked list via hitting a null (return false) or 2. have a scenario in which our second pointer hits our first, this is possible if our second pointer is both ahead of our first node and grows faster than our first node
+
    while (currentNode !== endNode) {
-      // we will get an error if we don't check if our end node has a next property, we can't for example get .next of null so we do our checks here and return null if there is a null/end to the linked list
       if (endNode === null || endNode.next === null) return false;
       currentNode = currentNode.next;
       endNode = endNode.next.next;
@@ -140,3 +138,5 @@ function findRepeat(numbers) {
    // We found a number that repeats!
    return floor;
 }
+
+console.log(threeSum([0, 1, 2, 3, 4, 5, 6], 6));
