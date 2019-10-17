@@ -1,142 +1,137 @@
-const threeSum = (arr, target) => {
-   const results = [];
-   // First sort the array
-   arr.sort((a, b) => a - b);
-   for (let i = 0; i < arr.length - 2; i++) {
-      let left = i + 1;
-      let right = arr.length - 1;
-      while (left < right) {
-         const sum = arr[left] + arr[i] + arr[right];
-         if (sum === target) {
-            results.push([arr[i], arr[left], arr[right]]);
-            left++;
-            right--;
-         } else if (sum < target) {
-            left++;
-         } else {
-            right--;
-         }
-      }
+class LinkedListNode {
+   constructor(value) {
+      this.next = null;
+      this.val = value;
    }
-   return results;
-};
-const isCircular = node => {
-   if (node === null || node.next === null) return false;
-
-   let currentNode = node;
-   let endNode = node.next;
-
-   while (currentNode !== endNode) {
-      if (endNode === null || endNode.next === null) return false;
-      currentNode = currentNode.next;
-      endNode = endNode.next.next;
+}
+class LinkedList {
+   constructor() {
+      this.head = null;
+      this.tail = null;
    }
-   return true;
-};
-const largestContinuousSum = arr => {
-   // Keep track of two variables, the current sum and a maximum sum
-   let currentSum = arr[0];
-   let currentMax = arr[0];
-   // Since we instantiated with index 0, we can start at 1
-   for (let i = 1; i < arr.length; i++) {
-      const currentNum = arr[i];
-      // Our current sum is the largest number between the current number in the array, or the sum of the current number and the current sum. For example, if the current number is 4, and our current sum is -2, since 4 is greater than 4+-2, we want current sum to be 4, [-2,4] => our accumulator's start point now becomes 4 instead of -2
-      currentSum = Math.max(currentNum, currentNum + currentSum);
-      // We want our maximum value to be the maximum between our currentSum and current max value because we essentially reset current sum multiple times
-      currentMax = Math.max(currentSum, currentMax);
-   }
-   return currentMax;
-};
-function findStart(words) {
-   // Start off by instantiating end points, we will use binary search to approach this problem
-   let currentRight = words.length - 1;
-   let currentLeft = 0;
-   let currentMiddleIdx = Math.floor(words.length / 2);
-   // Since we don't have a target value, I'm instead deciding to split the array based on the values of our end points. If the left most value of our subarray is less than the rightmost value, then divide the array to the left side, else divide it to the right side.
-   while (currentRight !== currentLeft) {
-      if (
-         words[currentLeft] < words[currentMiddleIdx] &&
-         words[currentLeft] < words[currentRight]
-      ) {
-         currentRight = currentMiddleIdx;
-      } else if (
-         words[currentRight] < words[currentMiddleIdx] &&
-         words[currentRight] < words[currentLeft]
-      ) {
-         currentLeft = currentMiddleIdx;
+   push(val) {
+      const newNode = new LinkedListNode(val);
+      if (!this.head) {
+         this.head = newNode;
+         this.tail = newNode;
       } else {
-         return currentMiddleIdx;
+         this.tail.next = newNode;
+         this.tail = newNode;
       }
-      currentMiddleIdx =
-         currentRight - Math.floor((currentRight - currentLeft) / 2);
+      return this;
    }
-   return currentMiddleIdx;
-}
-function maxProfit(stockPrices) {
-   // if we can't buy and sell (only one stock price), throw an error
-   if (stockPrices.length <= 1)
-      throw new Error('Stock prices is empty or has only one price');
-   // Set a variable that counts the maximum profit we can possibly have and make it a really small number
-   let maxProfit = -Infinity;
-   // Keep trap of the cheapest stock as well
-   let minPrice = stockPrices[0];
-   // Since we used the first item to store min price, we don't have to start our loop at 1!
-   for (let i = 1; i < stockPrices.length; i++) {
-      let currentStockPrice = stockPrices[i];
-      // Calculate the current difference or profit by subtracting the current minimum stock price we have from the current stock price
-      let currentDifference = currentStockPrice - minPrice;
-      // Our maximum profit is the maximum value between our current difference/profit and our previous maximum profit
-      maxProfit = Math.max(currentDifference, maxProfit);
-      // Our minimum stock price is also changed to be the smallest of our current min price and our current stock price
-      minPrice = Math.min(minPrice, currentStockPrice);
+   shift() {
+      if (!this.head) return this;
+      const newHead = this.head.next;
+      // break the connection
+      this.head.next = null;
+      this.head = newHead;
    }
-
-   return maxProfit;
-}
-// From interview cake
-function findRepeat(numbers) {
-   let floor = 1;
-   let ceiling = numbers.length - 1;
-
-   while (floor < ceiling) {
-      // Divide our range 1..n into an upper range and lower range
-      // (such that they don't overlap)
-      // lower range is floor..midpoint
-      // upper range is midpoint+1..ceiling
-      const midpoint = Math.floor(floor + (ceiling - floor) / 2);
-      const lowerRangeFloor = floor;
-      const lowerRangeCeiling = midpoint;
-      const upperRangeFloor = midpoint + 1;
-      const upperRangeCeiling = ceiling;
-
-      const distinctPossibleIntegersInLowerRange =
-         lowerRangeCeiling - lowerRangeFloor + 1;
-
-      // Count number of items in lower range
-      let itemsInLowerRange = 0;
-      numbers.forEach(item => {
-         // Is it in the lower range?
-         if (item >= lowerRangeFloor && item <= lowerRangeCeiling) {
-            itemsInLowerRange += 1;
-         }
-      });
-
-      if (itemsInLowerRange > distinctPossibleIntegersInLowerRange) {
-         // There must be a duplicate in the lower range
-         // so use the same approach iteratively on that range
-         floor = lowerRangeFloor;
-         ceiling = lowerRangeCeiling;
+   unshift(val) {
+      const newNode = new LinkedListNode(val);
+      if (!this.head) {
+         this.head = this.tail = newNode;
       } else {
-         // There must be a duplicate in the upper range
-         // so use the same approach iteratively on that range
-         floor = upperRangeFloor;
-         ceiling = upperRangeCeiling;
+         newNode.next = this.head;
+         this.head = newNode;
+      }
+      return this;
+   }
+   pop() {
+      if (!this.head) return this;
+      if (this.head === this.tail) {
+         this.head = this.tail = null;
+      } else {
+         let currentNode = this.head;
+         while (currentNode.next !== this.tail) {
+            currentNode = currentNode.next;
+         }
+         currentNode.next = null;
+      }
+      return this;
+   }
+   toArray() {
+      const arr = [];
+      let currentNode = this.head;
+      while (currentNode) {
+         arr.push(currentNode.val);
+         currentNode = currentNode.next;
+      }
+      console.log(arr);
+      return arr;
+   }
+}
+let deleteNode = nodeToDelete => {
+   // THIS WILL NOT DELETE THE LAST NODE IN JAVASCRIPT. nodeToDelete simply points to the last node in that scenario, setting nodeToDelete to null just makes us lose the pointer to the last node, it doesn't actually modify the list!
+   if (nodeToDelete.next === null) {
+      nodeToDelete = null;
+      delete nodeToDelete;
+   } else {
+      nodeToDelete.val = nodeToDelete.next.val;
+      nodeToDelete.next = nodeToDelete.next.next;
+   }
+};
+let reverse = headNode => {
+   let prev = null;
+   let currentNode = headNode;
+   while (currentNode) {
+      // Remember the next node since we're removing our only reference to it
+      const temp = currentNode.next;
+      // point our current node to the node behind it (previous)
+      currentNode.next = prev;
+      // set our previous node to the node we just reversed;
+      prev = currentNode;
+      // move our node forward
+      currentNode = temp;
+   }
+   // Prev is our new head
+   return prev;
+};
+let deleteKthNodeFromEnd = (head, k) => {
+   // we need to keep track of the node behind the node we want to remove which will be pointer1 here!
+   let prev;
+   let pointer1 = head;
+   let pointer2 = head;
+   // move our second pointer k units ahead of our first unit
+   for (let i = 0; i < k; i++) {
+      pointer2 = pointer2.next;
+   }
+   // this handles the case in which we want to remove the first node, if we don't have this line we end up skipping our while loop since pointer2 is at null, and trying to assign undefined.next (prev.next) to something else.
+   if (!pointer2) {
+      head = pointer1.next;
+      pointer1.next = null;
+      return head;
+   }
+   // move our second pointer until it reaches the end of our linked list, we then can confirm that pointer 1 is k units from the end of the list
+
+   while (pointer2) {
+      prev = pointer1;
+      pointer1 = pointer1.next;
+      pointer2 = pointer2.next;
+   }
+   // Now remove what's at pointer 1!
+   // Set the next of the node behind pointer 1 to point at the item after pointer 1
+   prev.next = pointer1.next;
+   // remove pointer 1's connection to pointer 2
+   pointer1.next = null;
+   return head;
+};
+let mergeTwoLinkedList = (head1, head2) => {
+   // node1 and node 2 let us keep track of the first and second linked lists
+   let node1 = head1;
+   let node2 = head2;
+   // Create a new linked list
+   let newList = new LinkedList();
+   while (node1 || node2) {
+      // If node1 isn't null and node2 exists, compare node1's value with node2's value. If node1 has a smaller value than node2, push node1 into our linked list, else push node2 into our linked list. If we push into our list, we have to move our pointer down
+      if (node1 && (!node2 || node1.val <= node2.val)) {
+         newList.push(node1.val);
+         node1 = node1.next;
+      } else {
+         newList.push(node2.val);
+         node2 = node2.next;
       }
    }
-
-   // Floor and ceiling have converged
-   // We found a number that repeats!
-   return floor;
-}
-
-console.log(threeSum([0, 1, 2, 3, 4, 5, 6], 6));
+   // Finally, return the head node of the list
+   return newList.head;
+};

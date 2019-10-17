@@ -1,14 +1,11 @@
 'use strict';
 const chai = require('chai');
 const {
-   threeSum,
-   isCircular,
-   largestContinuousSum,
-   findStart,
-   maxProfit,
-   findRepeat,
+   mergeTwoLinkedList,
+   reverse,
+   deleteNode,
+   deleteKthNodeFromEnd,
 } = require('./test.js');
-let sinon = require('sinon');
 const expect = chai.expect;
 let sinonChai = require('sinon-chai');
 chai.use(sinonChai);
@@ -29,125 +26,172 @@ class LinkedList {
          this.head = newNode;
          this.tail = newNode;
       } else {
-         let currentNode = this.head;
-         while (currentNode.next) {
-            currentNode = currentNode.next;
-         }
-         currentNode.next = newNode;
-         this.tail = currentNode.next;
+         this.tail.next = newNode;
+         this.tail = newNode;
       }
       return this;
    }
+   shift() {
+      if (!this.head) return this;
+      const newHead = this.head.next;
+      // break the connection
+      this.head.next = null;
+      this.head = newHead;
+   }
+   unshift(val) {
+      const newNode = new LinkedListNode(val);
+      if (!this.head) {
+         this.head = this.tail = newNode;
+      } else {
+         newNode.next = this.head;
+         this.head = newNode;
+      }
+      return this;
+   }
+   pop() {
+      if (!this.head) return this;
+      if (this.head === this.tail) {
+         this.head = this.tail = null;
+      } else {
+         let currentNode = this.head;
+         while (currentNode.next !== this.tail) {
+            currentNode = currentNode.next;
+         }
+         currentNode.next = null;
+      }
+      return this;
+   }
+   toArray() {
+      const arr = [];
+      let currentNode = this.head;
+      while (currentNode) {
+         arr.push(currentNode.val);
+         currentNode = currentNode.next;
+      }
+      console.log(arr);
+      return arr;
+   }
 }
-describe('Three sum function', () => {
-   it('should take an array and an integer and return an array', () => {
-      expect(Array.isArray(threeSum([1, 2, 3], 6))).to.equal(true);
+function toArray(head) {
+   const arr = [];
+   let currentNode = head;
+   while (currentNode) {
+      arr.push(currentNode.val);
+      currentNode = currentNode.next;
+   }
+   console.log(arr);
+   return arr;
+}
+describe('Delete in place function', () => {
+   const ll1 = new LinkedListNode(1);
+   ll1.next = new LinkedListNode(2);
+   ll1.next.next = new LinkedListNode(3);
+   ll1.next.next.next = new LinkedListNode(4);
+   const ll2 = new LinkedListNode(1);
+   ll2.next = new LinkedListNode(2);
+   ll2.next.next = new LinkedListNode(3);
+   ll2.next.next.next = new LinkedListNode(4);
+   const ll3 = new LinkedListNode(1);
+   ll3.next = new LinkedListNode(2);
+   ll3.next.next = new LinkedListNode(3);
+   ll3.next.next.next = new LinkedListNode(4);
+   ll3.next.next.next.next = new LinkedListNode(5);
+   ll3.next.next.next.next.next = new LinkedListNode(6);
+   it('takes a node and removes it from the linked list', () => {
+      deleteNode(ll1.next);
+      expect(toArray(ll1)).to.deep.equal([1, 3, 4]);
    });
-   it('should return a 2d array of results containing all triplets that add to the target', () => {
-      expect(threeSum([1, 2, 3], 6)).to.deep.equal([[1, 2, 3]]);
+   it('can handle the first node being deleted', () => {
+      deleteNode(ll3);
+      expect(toArray(ll3)).to.deep.equal([2, 3, 4, 5, 6]);
    });
-   it('should work for longer arrays', () => {
-      expect(threeSum([0, 1, 2, 3, 3], 6)).to.deep.equal([
-         [0, 3, 3],
-         [1, 2, 3],
+   // DOES NOT WORK IN JS
+   // it('can handle last node being deleted', () => {
+   //    deleteNode(ll2.next.next.next);
+   //    expect(toArray(ll2)).to.deep.equal([1, 2, 3]);
+   // });
+});
+xdescribe('reverse function', () => {
+   const ll1 = new LinkedListNode(1);
+   ll1.next = new LinkedListNode(2);
+   ll1.next.next = new LinkedListNode(3);
+   const ll2 = new LinkedListNode(1);
+   ll2.next = new LinkedListNode(2);
+   const ll3 = new LinkedListNode(1);
+   ll3.next = new LinkedListNode(2);
+   ll3.next.next = new LinkedListNode(3);
+   ll3.next.next.next = new LinkedListNode(4);
+   ll3.next.next.next.next = new LinkedListNode(5);
+   ll3.next.next.next.next.next = new LinkedListNode(6);
+   it('should reverse a given linked list', () => {
+      expect(toArray(reverse(ll1))).to.deep.equal([3, 2, 1]);
+   });
+   it('should work on small inputs', () => {
+      expect(toArray(reverse(ll2))).to.deep.equal([2, 1]);
+   });
+   it('should work on longer inputs', () => {
+      expect(toArray(reverse(ll3))).to.deep.equal([6, 5, 4, 3, 2, 1]);
+   });
+});
+xdescribe('delete kth node function', () => {
+   const ll1 = new LinkedListNode(1);
+   ll1.next = new LinkedListNode(2);
+   ll1.next.next = new LinkedListNode(3);
+   ll1.next.next.next = new LinkedListNode(4);
+   ll1.next.next.next.next = new LinkedListNode(5);
+   ll1.next.next.next.next.next = new LinkedListNode(6);
+   const ll2 = new LinkedListNode(1);
+   ll2.next = new LinkedListNode(2);
+   ll2.next.next = new LinkedListNode(3);
+   ll2.next.next.next = new LinkedListNode(4);
+   ll2.next.next.next.next = new LinkedListNode(5);
+   ll2.next.next.next.next.next = new LinkedListNode(6);
+   const ll3 = new LinkedListNode(1);
+   ll3.next = new LinkedListNode(2);
+   ll3.next.next = new LinkedListNode(3);
+   ll3.next.next.next = new LinkedListNode(4);
+   ll3.next.next.next.next = new LinkedListNode(5);
+   ll3.next.next.next.next.next = new LinkedListNode(6);
+   it('should remove the kth item from the end of the list given the head node and an integer k', () => {
+      deleteKthNodeFromEnd(ll1, 2);
+      expect(toArray(ll1)).to.deep.equal([1, 2, 3, 4, 6]);
+   });
+   it('should work on the last element', () => {
+      deleteKthNodeFromEnd(ll2, 1);
+      expect(toArray(ll2)).to.deep.equal([1, 2, 3, 4, 5]);
+   });
+   it('should work on the first element', () => {
+      expect(toArray(deleteKthNodeFromEnd(ll3, 6))).to.deep.equal([
+         2,
+         3,
+         4,
+         5,
+         6,
       ]);
    });
-   it('should work on an unsorted array', () => {
-      expect(threeSum([2, 3, 1, 0, 3], 6)).to.deep.equal([
-         [0, 3, 3],
-         [1, 2, 3],
-      ]);
-   });
 });
-describe('isCircular', () => {
-   const circularList = new LinkedListNode(1);
-   circularList.next = new LinkedListNode(2);
-   circularList.next.next = new LinkedListNode(3);
-   circularList.next.next.next = new LinkedListNode(4);
-   circularList.next.next.next.next = circularList;
-   it('should return a boolean', () => {
-      expect(typeof isCircular(circularList)).to.equal('boolean');
-   });
-   it('should return true if given a circularly linked list', () => {
-      expect(isCircular(circularList)).to.equal(true);
-   });
-   it('should return false if given a non-circular list', () => {
-      circularList.next.next.next.next = null;
-      expect(isCircular(circularList)).to.equal(false);
-   });
-});
-describe('largest contiguous sum function', () => {
-   it('it should take an array of integers and return a number', () => {
-      expect(typeof largestContinuousSum([10, 12, 13])).to.equal('number');
-   });
-   // Enable by removing the x;
-   it('returns the largest continuous sum', () => {
-      expect(largestContinuousSum([-10, 3, 2, -9, 20, 1, -20])).to.equal(21);
-   });
-   it('works on an array of all negative integers', () => {
-      expect(largestContinuousSum([-10, -3, -2, -9, -20, -1, -20])).to.equal(
-         -1,
-      );
-   });
-   it('works even if the array starts with a negative number', () => {
-      expect(largestContinuousSum([-1, 2, 3, -10, 3])).to.equal(5);
-   });
-});
-describe('semi sorted dictionary function', () => {
-   const words = [
-      'ptolemaic',
-      'retrograde',
-      'supplant',
-      'undulate',
-      'xenoepist',
-      'asymptote',
-      'babka',
-      'banoffee',
-      'engender',
-      'karpatka',
-      'othellolagkage',
-   ];
-   const words1 = ['grape', 'orange', 'plum', 'radish', 'apple'];
-   const words2 = ['apple', 'orange', 'plum', 'radish', 'grape'];
+xdescribe('merge two sorted linked list function', () => {
+   const ll1 = new LinkedListNode(1);
+   ll1.next = new LinkedListNode(2);
+   ll1.next.next = new LinkedListNode(3);
+   ll1.next.next.next = new LinkedListNode(4);
+   ll1.next.next.next.next = new LinkedListNode(5);
+   const ll2 = new LinkedListNode(1);
+   ll2.next = new LinkedListNode(2);
+   ll2.next.next = new LinkedListNode(4);
+   ll2.next.next.next = new LinkedListNode(6);
 
-   it('takes an array of strings and returns the index (integer) of the smallest string (alphabetically)', () => {
-      expect(typeof findStart(words)).to.equal('number');
-   });
-   it('should return the index or real start point of the dictionary/array', () => {
-      expect(findStart(words)).to.equal(5);
-   });
-   it('should pass on edges', () => {
-      expect(findStart(words1)).to.equal(4);
-      expect(findStart(words2)).to.equal(0);
-   });
-   xit("If you can do this in O(log(n)) time you're solid!");
-});
-describe('BONUS: Best time to buy and sell stock function', () => {
-   const stockPrices = [10, 7, 5, 8, 11, 9];
-   xit('takes an array of integers and returns an integer', () => {
-      expect(typeof maxProfit(stockPrices)).to.equal('number');
-   });
-   xit('should return the maximum profit you can make', () => {
-      expect(maxProfit(stockPrices)).to.equal(5);
-   });
-   xit('should work if the prices do down all day, you MUST buy and sell, here you should minimize losses instead of maximizing gains', () => {
-      expect(maxProfit([9, 7, 4, 1])).to.equal(-2);
-   });
-});
-describe('BONUS: Needle in haystack, find the first repeating number given an array of numbers', () => {
-   const sample1 = [1, 1];
-   const sample2 = [4, 1, 4, 8, 3, 2, 7, 6, 5];
-   const sample3 = [4, 1, 2, 3, 4];
-   xit('takes an array of integers and returns an integer', () => {
-      expect(typeof findRepeat(sample1)).to.equal('number');
-   });
-   xit('should work on a long array', () => {
-      expect(findRepeat(sample2)).to.equal(4);
-   });
-   xit('should work on a medium sized array', () => {
-      expect(findRepeat(sample3)).to.equal(4);
-   });
-   xit('should work on a short array', () => {
-      expect(findRepeat(sample1)).to.equal(1);
+   it('should merge two sorted linked lists given the head node for each list, return the head of the new list!', () => {
+      expect(toArray(mergeTwoLinkedList(ll1, ll2))).to.deep.equal([
+         1,
+         1,
+         2,
+         2,
+         3,
+         4,
+         4,
+         5,
+         6,
+      ]);
    });
 });
