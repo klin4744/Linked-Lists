@@ -107,6 +107,28 @@ The disadvantage of a linked list is that it is not great for lookups, since we 
 
 ## Linked List Algorithms
 
+### Setting up the test suite
+
+First clone this repo by running the following command in your terminal:
+
+```
+git clone https://github.com/klin4744/Linked-Lists.git
+```
+
+Next, install dependencies by running npm install inside the Linked List Repository
+
+```
+npm install
+```
+
+Finally, run the test suite by running npm run test in the terminal
+
+```
+npm run test
+```
+
+**Write ALL of your solutions in test.js, Please try not to look at solutions.js until you have atleast attempted the problems**
+
 ### Delete a node in place
 
 Given a node within a linked list, write a function called deleteNode() that deletes that node in place (mutates original linked list). Here are some examples:
@@ -151,5 +173,22 @@ We want to remove the second item from the end of this linked list since k=2, co
 
 The second item from the end of this list is 4, so our function should return this linked list given an input of 2:
 1 ➝ 2 ➝ 3 ➝ 5 
+`;
+```
+
+### Merge two sorted linked lists
+
+Given the head nodes of two different sorted linked lists, write a function called mergeTwoLinkedLists() that returns a new sorted linked list containing all the nodes of the two merged lists. Here's an example:
+
+```javascript
+mergeTwoLinkedLists(head1, head2); // returns Node(1), the head of our merged linked list
+`
+List 1
+1 ➝ 2 ➝ 3 
+List 2
+4 ➝ 5 
+
+Returns this new merged linked list:
+1 ➝ 2 ➝ 3 ➝ 4 ➝ 5
 `;
 ```
